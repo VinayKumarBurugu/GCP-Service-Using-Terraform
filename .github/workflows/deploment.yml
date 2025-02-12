@@ -34,8 +34,9 @@ jobs:
 
     
 
-      - name: Initialize Terraform 
-
+      - name: Initialize Terraform
+        
+        export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/credentials.json
         run: terraform init 
 
   
