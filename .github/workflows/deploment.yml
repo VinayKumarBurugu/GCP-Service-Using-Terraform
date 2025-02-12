@@ -25,5 +25,8 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -out=tfplan
 
+      - name: Set Terraform Output (example)
+        run: echo "TF_OUTPUT=some_value" >> $GITHUB_ENV
+
       - name: Terraform Apply
         run: terraform apply -auto-approve
