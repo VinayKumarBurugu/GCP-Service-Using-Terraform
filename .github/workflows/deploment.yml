@@ -25,8 +25,9 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -out=tfplan
 
-      - name: Set Terraform Output (example)
-        run: echo "TF_OUTPUT=some_value" >> $GITHUB_ENV
+      # Replace deprecated set-output with the new method using environment files
+      - name: Set output using environment files
+        run: echo "TF_PLAN=terraform plan -out=tfplan" >> $GITHUB_ENV
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
