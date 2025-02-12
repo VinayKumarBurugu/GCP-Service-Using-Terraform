@@ -9,6 +9,7 @@ terraform {
 provider "google" {
   project = "diesel-patrol-450717-f2"
   region  = "us-central1"
+  credentials = file("credentials.json")
 }
 
 # Step to Grant the existing service account permission to view objects in Cloud Storage
