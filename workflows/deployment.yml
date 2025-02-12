@@ -1,35 +1,57 @@
-name: Terraform Deployment
+name: Terraform Deployment 
 
-on:
-  push:
-    branches:
-      - main
+  
 
-jobs:
-  terraform:
-    runs-on: ubuntu-latest
+on: 
 
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+  push: 
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v1
+    branches: 
 
-      - name: Authenticate to GCP
-        run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > credentials.json
+      - main 
 
-      # Specify the working directory if your Terraform files are in a subdirectory
-      - name: Terraform Init
-        run: terraform init
-        # working-directory: ./path/to/terraform/directory  # Uncomment if using a subdirectory
+  
 
-      - name: Terraform Plan
-        run: terraform plan -out=tfplan
+jobs: 
 
-      # Replace deprecated set-output with the new method using environment files
-      - name: Set output using environment files
-        run: echo "TF_PLAN=$(terraform plan -out=tfplan)" >> $GITHUB_ENV
+  terraform: 
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+    runs-on: ubuntu-latest 
+
+  
+
+    steps: 
+
+      - name: Checkout Repository 
+
+        uses: actions/checkout@v3 
+
+  
+
+      - name: Set up Terraform 
+
+        uses: hashicorp/setup-terraform@v1 
+
+  
+
+      - name: Authenticate to GCP 
+
+        run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > credentials.json 
+
+  
+
+      - name: Initialize Terraform 
+
+        run: terraform init 
+
+  
+
+      - name: Plan Terraform Changes 
+
+        run: terraform plan -out=tfplan 
+
+  
+
+      - name: Apply Terraform Changes 
+
+        run: terraform apply -auto-approve 
