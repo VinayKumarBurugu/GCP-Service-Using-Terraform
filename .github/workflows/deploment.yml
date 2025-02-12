@@ -32,13 +32,7 @@ jobs:
 
         uses: hashicorp/setup-terraform@v1 
 
-  
-
-      - name: Authenticate to GCP 
-
-        run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > credentials.json 
-
-  
+    
 
       - name: Initialize Terraform 
 
