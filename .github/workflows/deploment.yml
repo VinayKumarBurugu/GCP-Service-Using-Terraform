@@ -1,57 +1,35 @@
-name: Terraform Deployment 
+name: Terraform Deployment
 
-  
+on:
+  push:
+    branches:
+      - main
 
-on: 
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
 
-  push: 
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-    branches: 
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
 
-      - main 
+      - name: Authenticate to GCP
+        run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > credentials.json
 
-  
+      - name: Initialize Terraform
+        run: terraform init
 
-jobs: 
+      - name: Plan Terraform Changes
+        id: plan
+        run: terraform plan -out=tfplan
 
-  terraform: 
+      # If you need to capture outputs, use $GITHUB_ENV to set them
+      - name: Capture Terraform Outputs
+        run: |
+          echo "TF_PLAN_OUTPUT=$(terraform output -json)" >> $GITHUB_ENV
 
-    runs-on: ubuntu-latest 
-
-  
-
-    steps: 
-
-      - name: Checkout Repository 
-
-        uses: actions/checkout@v3 
-
-  
-
-      - name: Set up Terraform 
-
-        uses: hashicorp/setup-terraform@v1 
-
-  
-
-      - name: Authenticate to GCP 
-
-        run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > credentials.json 
-
-  
-
-      - name: Initialize Terraform 
-
-        run: terraform init 
-
-  
-
-      - name: Plan Terraform Changes 
-
-        run: terraform plan -out=tfplan 
-
-  
-
-      - name: Apply Terraform Changes 
-
-        run: terraform apply -auto-approve 
+      - name: Apply Terraform Changes
+        run: terraform apply -auto-approve
