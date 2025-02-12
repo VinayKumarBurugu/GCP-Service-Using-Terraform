@@ -19,15 +19,17 @@ jobs:
       - name: Authenticate to GCP
         run: echo '${{ secrets.GOOGLE_CREDENTIALS }}' > credentials.json
 
+      # Specify the working directory if your Terraform files are in a subdirectory
       - name: Terraform Init
         run: terraform init
+        # working-directory: ./path/to/terraform/directory  # Uncomment if using a subdirectory
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan
 
       # Replace deprecated set-output with the new method using environment files
       - name: Set output using environment files
-        run: echo "TF_PLAN=terraform plan -out=tfplan" >> $GITHUB_ENV
+        run: echo "TF_PLAN=$(terraform plan -out=tfplan)" >> $GITHUB_ENV
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
